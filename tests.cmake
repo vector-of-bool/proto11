@@ -18,7 +18,7 @@ foreach(fname varint message)
     add_test(${test} ${test})
 endforeach()
 
-foreach(tname basic)
+foreach(tname basic tut1)
     set(test proto11.${tname})
     proto11_add_library(${tname}-generated tests/${tname}.proto)
     add_executable(${test} tests/${tname}.cpp)

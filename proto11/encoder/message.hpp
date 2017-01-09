@@ -27,6 +27,15 @@ std::pair<T, Iter> read_length_delim(Iter iter, const Iter last, std::input_iter
     return { proto11::read<T>(buffer.begin(), buffer.end()).first, iter };
 }
 
+template <typename T, typename Iter>
+std::pair<T, Iter> read_length_delim(Iter iter, const Iter last, std::forward_iterator_tag) {
+    std::uint64_t length = 0;
+    std::tie(length, iter) = read_varint(iter, last);
+    auto part_end = iter;
+    std::advance(part_end, length);
+    return proto11::read<T>(iter, part_end);
+}
+
 template <typename T, typename Iter> std::pair<T, Iter> read_integral(field_header h, Iter first, Iter last) {
     switch (h.type) {
     case wire_type::varint: {

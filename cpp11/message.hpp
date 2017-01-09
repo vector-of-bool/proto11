@@ -221,16 +221,20 @@ inline void emit_message(Emitter& em, const google::protobuf::Descriptor& desc) 
                              PROTO11_FOREACH(desc, field) {
                                  em.line("// Decode field ", field.name());
                                  em.block("case " + std::to_string(field.number()) + ": {", "}", [&] {
+                                     std::string target = "ret." + field.name();
+                                     target = field.label() == google::protobuf::FieldDescriptor::LABEL_REPEATED
+                                         ? ("std::back_inserter(" + target + ")")
+                                         : target;
                                      if (field_wire_type(field) == wire_type::length_delimited) {
-                                         em.line("std::tie(ret.",
-                                                 field.name(),
+                                         em.line("std::tie(",
+                                                 target,
                                                  ", iter) = proto11::detail::read_length_delim<",
                                                  field_base_type_name(field),
                                                  ">(iter, last, typename "
                                                  "std::iterator_traits<Iter>::iterator_category{});");
                                      } else {
-                                         em.line("std::tie(ret.",
-                                                 field.name(),
+                                         em.line("std::tie(",
+                                                 target,
                                                  ", iter) = proto11::detail::read_integral<",
                                                  field_base_type_name(field),
                                                  ">(header, iter, last);");
