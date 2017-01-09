@@ -34,6 +34,13 @@ void emit_enum(Emitter& em, const google::protobuf::EnumDescriptor& desc) {
                 em.line("auto pair = read_varint(first, last);");
                 em.line("return { static_cast<type>(pair.first), pair.second };");
             });
+            em.block("static constexpr const char* key(type value) noexcept {", "}", [&] {
+                em.line("return false ? \"[never]\"");
+                PROTO11_FOREACH(desc, value) {
+                    em.line("    : (value == ", qualified_name(desc), "::", value.name(), ") ? \"", value.name(), "\"");
+                };
+                em.line("    : \"[INVALID VALUE]\";");
+            });
         });
         em.line();
         em.line("}");
