@@ -7,13 +7,17 @@
 
 namespace proto11 {
 
-template <typename Desc>
-std::string qualified_name(const Desc& desc) {
-    std::string acc = desc.full_name();
+inline std::string qualified_name(std::string str) {
+    std::string acc = str;
     std::size_t pos = 0;
     while ((pos = acc.find('.')) != acc.npos)
         acc.replace(pos, 1, "::");
     return acc;
+}
+
+template <typename Desc>
+std::string qualified_name(const Desc& desc) {
+    return qualified_name(desc.full_name());
 }
 
 
