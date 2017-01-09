@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package basic;
+
+enum MyEnumeration {
+    Invalid = 0;
+    Something = 1;
+    Another = 2;
+}
+
+message User {
+    string name = 1;
+    string realName = 2;
+    string nickName = 3;
+    MyEnumeration what = 4;
+
+    int32 meow = 5;
+}
