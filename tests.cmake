@@ -14,7 +14,7 @@ endif()
 foreach(fname varint message)
     set(test proto11.encoder.${fname})
     add_executable(${test} proto11/encoder/${fname}.t.cpp)
-    target_link_libraries(${test} PRIVATE proto11::encoder catch::main)
+    target_link_libraries(${test} PRIVATE proto11::support catch::main)
     add_test(${test} ${test})
 endforeach()
 
