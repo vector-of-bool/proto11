@@ -20,7 +20,7 @@ endforeach()
 
 foreach(tname basic tut1)
     set(test proto11.${tname})
-    proto11_add_library(${tname}-generated tests/${tname}.proto)
+    proto11_add_library(${tname}-generated tests/${tname}.proto tests/imported.proto)
     add_executable(${test} tests/${tname}.cpp)
     target_link_libraries(${test} PRIVATE catch::main ${tname}-generated)
     add_test(${test} ${test})
