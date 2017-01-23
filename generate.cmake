@@ -8,10 +8,10 @@ function(proto11_add_library name)
         get_filename_component(generated_cpp "${gendir}/${relpath}.cpp" ABSOLUTE)
         add_custom_command(
             OUTPUT "${generated_hpp}" "${generated_cpp}"
-            DEPENDS "${input}" protoc-proto11
+            DEPENDS "${input}" proto11
             COMMAND "${CMAKE_COMMAND}" -E make_directory "${gendir}"
             COMMAND "${CMAKE_COMMAND}" -E chdir "${gendir}"
-                $<TARGET_FILE:protoc-proto11>
+                $<TARGET_FILE:proto11>
                     -I "${CMAKE_CURRENT_SOURCE_DIR}"
                     --cpp11_out="${gendir}"
                     "${input}"

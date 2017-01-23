@@ -16,17 +16,17 @@ add_library(proto11::encoder ALIAS encoder)
 target_include_directories(encoder PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 target_link_libraries(encoder PUBLIC Boost::boost)
 
-add_executable(protoc-proto11
+add_executable(proto11
     main.cpp
 
     cpp11/emitter.hpp
     cpp11/cpp11_generator.hpp
     cpp11/cpp11_generator.cpp
     )
-target_link_libraries(protoc-proto11 PRIVATE protobuf::libprotoc proto11::encoder)
+target_link_libraries(proto11 PRIVATE protobuf::libprotoc proto11::encoder)
 
 if(MSVC)
-    target_compile_options(protoc-proto11 PRIVATE /MT$<$<CONFIG:Debug>:d>)
+    target_compile_options(proto11 PRIVATE /MT$<$<CONFIG:Debug>:d>)
 endif()
 
 include(TestBigEndian)
