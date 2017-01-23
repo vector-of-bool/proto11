@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "tests/imported.proto";
+
 package basic;
 
 enum MyEnumeration {
@@ -15,4 +17,6 @@ message User {
     MyEnumeration what = 4;
 
     int32 meow = 5;
+
+    test.TestImportMessage subMessage = 6;
 }

@@ -21,6 +21,13 @@ inline void emit_file(Emitter& em, const google::protobuf::FileDescriptor& file)
         em.line("#include <boost/optional.hpp>");
     });
 
+    // Check for any imports
+    PROTO11_FOREACH(file, dependency) {
+        const auto name = dependency.name();
+        const auto include = name + ".hpp";
+        em.line("#include <", include, ">");
+    };
+
     // Emit the namespace directives
     const auto ns_depth = count(file.package().begin(), file.package().end(), '.') + 1;
     auto ns_prefix = file.package();
